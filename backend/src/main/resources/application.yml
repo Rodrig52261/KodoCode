@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: kodocode-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/kodocode}
+    username: ${DATABASE_USERNAME:kodocode}
+    password: ${DATABASE_PASSWORD:kodocode_dev}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  jackson:
+    default-property-inclusion: non_null
+  mvc:
+    problemdetails:
+      enabled: true
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+  # Do not trust client-supplied Forwarded/X-Forwarded-* headers. In production,
+  # terminate them at a trusted reverse proxy and opt into native handling there.
+  forward-headers-strategy: none
+
+kodo:
+  jwt:
+    secret: ${KODO_JWT_SECRET}
+    access-token-ttl: ${KODO_ACCESS_TOKEN_TTL:15m}
+    refresh-token-ttl: ${KODO_REFRESH_TOKEN_TTL:7d}
+    issuer: kodocode-api
+  cookie:
+    secure: ${KODO_COOKIE_SECURE:false}
+    same-site: ${KODO_COOKIE_SAME_SITE:Lax}
+    domain: ${KODO_COOKIE_DOMAIN:}
+  cors:
+    allowed-origins: ${KODO_CORS_ALLOWED_ORIGINS:http://localhost:3000}
+  security:
+    max-failed-login-attempts: ${KODO_MAX_FAILED_LOGIN_ATTEMPTS:5}
+    account-lock-duration: ${KODO_ACCOUNT_LOCK_DURATION:15m}
+    login-rate-limit-per-minute: ${KODO_LOGIN_RATE_LIMIT_PER_MINUTE:10}
+  bootstrap-admin:
+    enabled: ${KODO_BOOTSTRAP_ADMIN_ENABLED:false}
+    name: ${KODO_BOOTSTRAP_ADMIN_NAME:}
+    email: ${KODO_BOOTSTRAP_ADMIN_EMAIL:}
+    password: ${KODO_BOOTSTRAP_ADMIN_PASSWORD:}
+  contact:
+    minimum-submission-duration: ${KODO_CONTACT_MINIMUM_DURATION:3s}
+    duplicate-window: ${KODO_CONTACT_DUPLICATE_WINDOW:10m}
+    rate-limit-per-hour: ${KODO_CONTACT_RATE_LIMIT_PER_HOUR:5}
+  email:
+    enabled: ${KODO_EMAILJS_ENABLED:false}
+    notification-to: ${KODO_EMAILJS_NOTIFICATION_TO:}
+    email-js:
+      endpoint: ${KODO_EMAILJS_ENDPOINT:https://api.emailjs.com/api/v1.0/email/send}
+      service-id: ${KODO_EMAILJS_SERVICE_ID:}
+      notification-template-id: ${KODO_EMAILJS_NOTIFICATION_TEMPLATE_ID:}
+      confirmation-template-id: ${KODO_EMAILJS_CONFIRMATION_TEMPLATE_ID:}
+      public-key: ${KODO_EMAILJS_PUBLIC_KEY:}
+      private-key: ${KODO_EMAILJS_PRIVATE_KEY:}
+      minimum-request-interval: ${KODO_EMAILJS_MINIMUM_REQUEST_INTERVAL:1100ms}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+  api-docs:
+    path: /v3/api-docs

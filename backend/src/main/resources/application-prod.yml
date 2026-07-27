@@ -1,0 +1,20 @@
+server:
+  shutdown: graceful
+
+logging:
+  structured:
+    format:
+      console: ecs
+  level:
+    root: INFO
+    com.kodocode.api: INFO
+
+kodo:
+  cookie:
+    secure: true
+
+springdoc:
+  api-docs:
+    enabled: ${KODO_OPENAPI_ENABLED:false}
+  swagger-ui:
+    enabled: ${KODO_OPENAPI_ENABLED:false}

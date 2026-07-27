@@ -1,0 +1,18 @@
+package com.kodocode.api.audit;
+
+public enum AuditAction {
+    LOGIN,
+    LOGIN_FAILURE,
+    LOGOUT,
+    PASSWORD_CHANGE,
+    UNAUTHORIZED_ACCESS,
+    CONTENT_CREATE,
+    CONTENT_UPDATE,
+    CONTENT_PUBLISH,
+    CONTENT_RESTORE,
+    FAQ_UPDATE,
+    FAQ_PUBLISH,
+    LEAD_STATUS_CHANGE,
+    LEAD_NOTES_CHANGE,
+    LEAD_ARCHIVE
+}
