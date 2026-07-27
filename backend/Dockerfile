@@ -10,6 +10,7 @@ WORKDIR /app
 RUN apk upgrade --no-cache
 RUN addgroup -S kodocode && adduser -S kodocode -G kodocode
 COPY --from=build /app/target/kodocode-api-*.jar app.jar
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/kodocode-entrypoint
 USER kodocode
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["kodocode-entrypoint"]

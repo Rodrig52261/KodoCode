@@ -4,6 +4,8 @@
 
 A aplicação foi revisada de ponta a ponta: frontend Next.js, API Spring Boot, autenticação, editor de conteúdo, formulário de contato, EmailJS, PostgreSQL, Docker Compose, dependências e configuração. Todos os achados exploráveis identificados durante a revisão foram corrigidos. O ambiente corrigido está em execução e saudável.
 
+Após a auditoria, os dados de negócio foram migrados para o Supabase PostgreSQL via Session Pooler/TLS. Auditorias e refresh tokens anteriores não foram migrados. O PostgreSQL local foi retirado da composição ativa e mantido apenas como backup recuperável.
+
 Não foram encontrados segredos com formato de chave privada ou token no código-fonte. Os arquivos locais `.env` estão com modo `600` e o bootstrap administrativo está desativado.
 
 ## Achados corrigidos
@@ -19,7 +21,7 @@ Não foram encontrados segredos com formato de chave privada ou token no código
 | Busca administrativa aceitava curingas SQL e texto excessivo | Tamanho limitado e escape de `%`, `_` e `\\` em consultas `LIKE`. |
 | Swagger/OpenAPI acessível anonimamente | Rotas protegidas por `ROLE_ADMIN`; somente health checks permanecem públicos. |
 | Browser sem política defensiva consistente | CSP, anti-framing, `nosniff`, Referrer Policy, Permissions Policy, COOP e CORP. |
-| Navegador dependia de `localhost:8080` e acesso cross-origin ao backend | Proxy same-origin `/api`; backend permanece na rede privada do Compose. |
+| Navegador dependia de `localhost:8080` e acesso cross-origin ao backend | Proxy same-origin `/api`; backend permanece na rede privada do Compose e é o único cliente do Supabase. |
 | Contêineres com superfície e rede maiores que o necessário | Usuários sem privilégio, capabilities removidas, `no-new-privileges`, init, `/tmp` temporário e redes segmentadas. |
 | Dependências vulneráveis nas imagens | PostgreSQL JDBC atualizado; Alpine atualizado; npm/corepack/yarn removidos do runtime; `gosu` vulnerável substituído por `su-exec` em imagem achatada. |
 | Credenciais de bootstrap enviadas permanentemente ao contêiner | Variáveis removidas do Compose normal e bootstrap desativado. |

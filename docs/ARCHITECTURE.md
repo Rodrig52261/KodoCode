@@ -9,7 +9,7 @@ flowchart LR
     B[Navegador] -->|HTML e Server Components| N[Next.js]
     B -->|REST + cookies HttpOnly + CSRF| A[Spring Boot API]
     N -->|validação de sessão no servidor| A
-    A -->|JPA + migrations Flyway| P[(PostgreSQL)]
+    A -->|JPA + migrations Flyway / TLS| P[(Supabase PostgreSQL)]
     A -->|EmailService / REST| E[EmailJS]
 ```
 
@@ -17,7 +17,7 @@ Responsabilidades:
 
 - Next.js: landing page, SEO, formulários, painel e experiência responsiva/acessível.
 - Spring Boot: autenticação, autorização, validação, regras de negócio, auditoria e contratos REST.
-- PostgreSQL: usuários, sessões, versões de conteúdo, contatos, FAQs e trilha de auditoria.
+- Supabase PostgreSQL: usuários, sessões, versões de conteúdo, contatos, FAQs e trilha de auditoria; não é acessado diretamente pelo frontend.
 - Flyway: evolução reprodutível do schema; JPA opera com `ddl-auto=validate`.
 
 ## Estrutura do frontend

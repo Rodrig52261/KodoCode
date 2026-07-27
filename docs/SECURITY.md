@@ -10,9 +10,9 @@
 - CSP, proteção contra framing, `nosniff`, política de referência e permissões restritas no frontend;
 - validação e limites dos formulários, honeypot, tempo mínimo, deduplicação e limite por IP/e-mail;
 - auditoria append-only no PostgreSQL, com redação recursiva de senhas, tokens, cookies e segredos;
-- proxy `/api` same-origin, backend/PostgreSQL vinculados ao loopback e redes segmentadas no Compose;
-- frontend/backend sem capacidades Linux e PostgreSQL somente com as cinco capacidades necessárias para inicializar e reduzir privilégios;
-- imagens mínimas atualizadas, ferramentas de pacote removidas do runtime e PostgreSQL sem o binário `gosu` vulnerável;
+- proxy `/api` same-origin, backend vinculado ao loopback e banco Supabase acessível somente pelo backend com TLS;
+- frontend/backend sem capacidades Linux e com `no-new-privileges` no Compose;
+- imagens mínimas atualizadas e ferramentas de pacote removidas do runtime;
 - timeouts e HTTPS obrigatório para chamadas ao EmailJS.
 
 ## Responsabilidades de produção

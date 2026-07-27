@@ -18,10 +18,11 @@ Requisitos: Docker com Compose.
 
 ```bash
 cp .env.example .env
+cp backend/.env.example backend/.env
 openssl rand -base64 48
 ```
 
-Copie o valor gerado para `KODO_JWT_SECRET` no `.env`. Para criar o primeiro administrador, forneça temporariamente em uma execução isolada do backend:
+Configure em `backend/.env` a conexão **Session Pooler** do Supabase e copie o valor gerado para `KODO_JWT_SECRET`. Para criar o primeiro administrador, forneça temporariamente em uma execução isolada do backend:
 
 ```dotenv
 KODO_BOOTSTRAP_ADMIN_ENABLED=true
@@ -44,7 +45,7 @@ Serviços locais:
 - Login: `http://localhost:3001/admin/login`
 - API: `http://localhost:8080`
 - OpenAPI em desenvolvimento: `http://localhost:8080/swagger-ui.html` (exige sessão administrativa)
-- PostgreSQL: `localhost:55432`
+- PostgreSQL: projeto gerenciado no Supabase, sem porta local exposta
 
 O conteúdo inicial é aplicado pela migration `V3__seed_public_content.sql`. Antes de publicar em um domínio real, revise `NEXT_PUBLIC_SITE_URL` e os textos/dados de contato pelo painel.
 

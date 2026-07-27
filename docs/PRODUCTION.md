@@ -2,12 +2,12 @@
 
 ## Topologia recomendada
 
-Publique o Next.js e a API Spring Boot como serviços privados atrás de um proxy HTTPS. Exponha somente o proxy. Mantenha PostgreSQL e portas internas do backend inacessíveis pela rede pública. Prefira encaminhar `/api` no mesmo domínio do frontend; isso preserva cookies host-only e evita ampliar o domínio dos cookies. O frontend deve alcançar `API_INTERNAL_URL` pela rede interna.
+Publique o Next.js e a API Spring Boot como serviços privados atrás de um proxy HTTPS. Exponha somente o proxy. O PostgreSQL é gerenciado pelo Supabase e deve ser acessado exclusivamente pelo backend via Session Pooler com TLS. Prefira encaminhar `/api` no mesmo domínio do frontend; isso preserva cookies host-only e evita ampliar o domínio dos cookies. O frontend deve alcançar `API_INTERNAL_URL` pela rede interna.
 
 ## Variáveis obrigatórias
 
 - `SPRING_PROFILES_ACTIVE=prod`;
-- `DATABASE_URL`, `DATABASE_USERNAME` e `DATABASE_PASSWORD` de um usuário exclusivo;
+- `DATABASE_URL` do Session Pooler Supabase com `sslmode=require`, `DATABASE_USERNAME` com o project ref e `DATABASE_PASSWORD` definida no cofre;
 - `KODO_JWT_SECRET` aleatório (por exemplo, `openssl rand -hex 32`);
 - `KODO_CORS_ALLOWED_ORIGINS=https://seudominio.com.br`;
 - `KODO_COOKIE_SECURE=true`, `KODO_COOKIE_SAME_SITE=Lax` e cookies host-only sempre que possível;

@@ -6,8 +6,8 @@ API REST da Kodo Code com Java 21, Spring Boot, Spring Security, JPA, PostgreSQL
 
 - Java 21;
 - Maven 3.9+;
-- PostgreSQL 17; ou
-- Docker, para executar sem instalar Java e PostgreSQL localmente.
+- PostgreSQL 17 no Supabase; ou
+- Docker, para executar sem instalar Java localmente.
 
 ## Configuração
 
@@ -16,6 +16,8 @@ cp .env.example .env
 ```
 
 `KODO_JWT_SECRET` é obrigatório e deve ter ao menos 32 caracteres. Em produção, use um segredo aleatório, cookies HTTPS e uma origem CORS explícita.
+
+Use a conexão **Session Pooler** do Supabase na porta 5432. A URL deve usar o formato JDBC (`jdbc:postgresql://...`) ao executar diretamente com Maven. A imagem Docker também normaliza com segurança URLs `postgresql://...` fornecidas pelo painel do Supabase.
 
 Variáveis principais:
 
@@ -43,7 +45,7 @@ mvn verify
 Ou, a partir da raiz do repositório:
 
 ```bash
-docker compose up --build postgres backend
+docker compose up --build backend
 ```
 
 O Flyway aplica automaticamente as migrations antes da validação do modelo JPA. A documentação fica disponível em `/swagger-ui.html` no perfil de desenvolvimento e é desabilitada por padrão em produção.
