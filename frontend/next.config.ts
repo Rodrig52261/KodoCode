@@ -1,13 +1,19 @@
 import type { NextConfig } from "next";
 
 const publicApiUrl = process.env.NEXT_PUBLIC_API_URL?.trim() ?? "";
-const internalApiUrl = (process.env.API_INTERNAL_URL ?? "http://localhost:8080").replace(/\/$/, "");
+const internalApiUrl = (process.env.API_INTERNAL_URL ?? "http://localhost:8080").trim().replace(/\/+$/, "");
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 let apiOrigin = "";
 try {
   if (publicApiUrl) apiOrigin = new URL(publicApiUrl).origin;
 } catch {
   throw new Error("NEXT_PUBLIC_API_URL deve ser uma URL absoluta ou ficar vazio para usar o proxy same-origin.");
+}
+try {
+  const url = new URL(internalApiUrl);
+  if (!["http:", "https:"].includes(url.protocol)) throw new Error("unsupported protocol");
+} catch {
+  throw new Error("API_INTERNAL_URL deve ser uma URL absoluta, como https://seu-backend.onrender.com, sem /api no final.");
 }
 const isDevelopment = process.env.NODE_ENV !== "production";
 const isHttps = siteUrl.startsWith("https://");

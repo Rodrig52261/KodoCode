@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { apiRequest, initializeCsrf } from "@/lib/api/client";
 import { type Lead, type PageResponse, formatDate, labels } from "@/features/admin/types";
-import { Heading, State } from "../dashboard/page";
+import { Heading, State } from "@/features/admin/components";
 const statuses=["NEW","VIEWED","IN_PROGRESS","PROPOSAL_SENT","CONVERTED","ARCHIVED"];
 const services=["LANDING_PAGE","INSTITUTIONAL_SITE","CRM","WHATSAPP_CHATBOT","CUSTOM_SYSTEM","UNDECIDED"];
 export default function LeadsPage(){const [result,setResult]=useState<PageResponse<Lead>>();const [selected,setSelected]=useState<Lead>();const [filters,setFilters]=useState({search:"",status:"",service:"",page:0});const [error,setError]=useState("");
